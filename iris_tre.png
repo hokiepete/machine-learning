@@ -1,0 +1,47 @@
+digraph Tree {
+	graph [bb="0,0,342,308"];
+	node [color=black,
+		fontname=helvetica,
+		label="\N",
+		shape=box,
+		style="filled, rounded"
+	];
+	edge [fontname=helvetica];
+	0	 [fillcolor="#e5813900",
+		height=1.1528,
+		label="petal width (cm) <= 0.8\ngini = 0.667\nsamples = 150\nvalue = [50, 50, 50]\nclass = setosa",
+		pos="137,266",
+		width=2.1458];
+	1	 [fillcolor="#e58139ff",
+		height=0.94444,
+		label="gini = 0.0\nsamples = 50\nvalue = [50, 0, 0]\nclass = setosa",
+		pos="58,146",
+		width=1.6181];
+	0 -> 1	 [head_lp="75.407,204.78",
+		headlabel=True,
+		labelangle=45,
+		labeldistance=2.5,
+		pos="e,80.262,180.25 109.81,224.39 102.13,212.92 93.757,200.41 86.027,188.86"];
+	2	 [fillcolor="#39e58100",
+		height=1.1528,
+		label="petal width (cm) <= 1.75\ngini = 0.5\nsamples = 100\nvalue = [0, 50, 50]\nclass = versicolor",
+		pos="216,146",
+		width=2.2569];
+	0 -> 2	 [head_lp="193.62,212.21",
+		headlabel=False,
+		labelangle=-45,
+		labeldistance=2.5,
+		pos="e,188.76,187.68 164.19,224.39 170.27,215.31 176.79,205.57 183.07,196.18"];
+	3	 [fillcolor="#39e581e5",
+		height=0.94444,
+		label="gini = 0.168\nsamples = 54\nvalue = [0, 49, 5]\nclass = versicolor",
+		pos="147,34",
+		width=1.6736];
+	2 -> 3	 [pos="e,167.88,68.287 190.5,104.35 184.86,95.355 178.87,85.807 173.2,76.765"];
+	4	 [fillcolor="#8139e5f9",
+		height=0.94444,
+		label="gini = 0.043\nsamples = 46\nvalue = [0, 1, 45]\nclass = virginica",
+		pos="284,34",
+		width=1.6181];
+	2 -> 4	 [pos="e,263.42,68.287 241.13,104.35 246.63,95.448 252.47,86.003 258.01,77.045"];
+}
