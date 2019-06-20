@@ -145,15 +145,51 @@ with tf.Session() as sess:
 
 
 
+import numpy as np
+from sklearn.datasets import fetch_california_housing
+from sklearn.preprocessing import StandardScaler
+from datetime import datetime
+now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+root_logdir = "tf_logs"
+logdir="{}/run-{}".format(root_logdir,now)
 
+n_epochs = 1000
+learning_rate = 0.01
 
+housing = fetch_california_housing()
+scal = StandardScaler()
+scal.fit(housing.data)
+housing.data = scal.transform(housing.data)
+m,n = housing.data.shape
+housing_data_plus_bias= np.c_[np.ones((m,1)),housing.data] 
+x=tf.constant(housing_data_plus_bias,dtype=tf.float32,name='x')
+y=tf.constant(housing.target.reshape(-1,1),dtype=tf.float32,name='y')
+theta = tf.Variable(tf.random_uniform([n+1,1],-1.0,1.0),name='theta')
+ypred = tf.matmul(x,theta,name='predictions')
+error = ypred-y
+mse = tf.reduce_mean(tf.square(error),name='mse')
+mse_summary = tf.summary.scalar('MSE',mse)
+file_writer = tf.summary.FileWriter(logdir,tf.get_default_graph())
 
+#gradients = 2/m*tf.matmul(tf.transpose(x),error)
+#gradients = tf.gradients(mse,[theta])[0]
+#training_op = tf.assign(theta,theta-learning_rate*gradients)
+saver = tf.train.Saver()
+#optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.9)
+training_op = optimizer.minimize(mse)
 
+init = tf.global_variables_initializer()
 
+with tf.Session() as sess:
+    sess.run(init)
+    
+    for epoch in range(n_epochs):
+        if epoch % 100 ==0:
+            print('Epoch',epoch,'MSE=',mse.eval())
+        sess.run(training_op)
+    best_theta = theta.eval()
+    save_path = saver.save(sess,"tmp/model.ckpt")
 
-
-
-
-
-
+file_writer.close()
 
