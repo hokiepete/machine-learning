@@ -82,7 +82,7 @@ saver = tf.train.Saver()
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('./tmp/data/')
 
-n_epochs = 40
+n_epochs = 10
 batch_size = 50
 
 with tf.Session() as sess:
